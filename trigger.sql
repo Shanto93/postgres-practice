@@ -34,3 +34,52 @@ FOR EACH ROW
 EXECUTE FUNCTION save_deleted_user();
 
 DELETE FROM my_user WHERE username = 'rabbi';
+
+-------------------------Another Trigger Example Practice-----------------------------------------
+
+CREATE TABLE shop (
+    shop_id SERIAL PRIMARY KEY,
+    shop_name VARCHAR(50) NOT NULL,
+    location VARCHAR(100) NOT NULL
+)
+
+INSERT INTO
+    shop (shop_name, location)
+VALUES ('shop1', 'Dhaka'),
+    ('shop2', 'Chittagong'),
+    ('shop3', 'Khulna'),
+    ('shop4', 'Rajshahi'),
+    ('shop5', 'Sylhet'),
+    ('shop6', 'Barisal');
+
+SELECT * FROM shop;
+
+CREATE TABLE deleted_shops_audit (
+    deleted_shop_name VARCHAR(50) NOT NULL,
+    deleted_at TIMESTAMP
+);
+
+--Create a function to save deleted shop names
+CREATE or REPLACE FUNCTION save_deleted_shops_info()
+RETURNS TRIGGER
+LANGUAGE PLPGSQL AS
+    $$
+        BEGIN
+            INSERT INTO deleted_shops_audit VALUES(OLD.shop_name, now());
+            RAISE NOTICE 'Deleted shops audit table updated';
+            RETURN OLD;
+        END
+    $$
+
+--Creating Trigger function for deleted shops audit
+
+CREATE or REPLACE TRIGGER save_deleted_shops_trigger
+BEFORE DELETE ON shop
+FOR EACH ROW
+EXECUTE FUNCTION save_deleted_shops_info();
+
+SELECT * FROM deleted_shops_audit;
+
+SELECT * FROM shop;
+
+DELETE FROM shop WHERE shop_name = 'shop2';
