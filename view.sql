@@ -19,3 +19,16 @@ $$
 SELECT * FROM count_employee ();
 
 SELECT count(*) FROM employees2;
+
+SELECT * FROM employees2;
+
+CREATE FUNCTION delete_employee(p_employee_id INT)
+RETURNS void
+LANGUAGE SQL
+AS
+$$
+DELETE FROM employees2
+WHERE employee_id = p_employee_id;
+$$
+
+SELECT * FROM delete_employee (20);
