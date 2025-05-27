@@ -132,7 +132,10 @@ GROUP BY director_name;
 
 
 --4. Find all movies that are both "Drama" and "Crime" genres.
-
+SELECT m.title, g.genre_name, m.box_office_gross, m.release_year FROM movies AS m
+JOIN movie_genres AS mg ON m.movie_id = mg.movie_id
+JOIN genres AS g ON mg.genre_id = g.genre_id
+WHERE g.genre_name IN('Drama', 'Crime');
 --5. List movies along with their lead actor(s).
 
 
