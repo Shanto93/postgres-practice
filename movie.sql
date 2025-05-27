@@ -136,7 +136,12 @@ SELECT m.title, g.genre_name, m.box_office_gross, m.release_year FROM movies AS 
 JOIN movie_genres AS mg ON m.movie_id = mg.movie_id
 JOIN genres AS g ON mg.genre_id = g.genre_id
 WHERE g.genre_name IN('Drama', 'Crime');
+
 --5. List movies along with their lead actor(s).
+SELECT m.title AS Movie_Title, a.first_name || ' ' || a.last_name AS Actor_Name FROM movies AS m
+JOIN movie_actors AS ma ON m.movie_id = ma.movie_id
+JOIN actors AS a ON ma.actor_id = a.actor_id;
+
 
 
 --------------------Simple Problem----------------
