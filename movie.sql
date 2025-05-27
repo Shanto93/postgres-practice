@@ -126,6 +126,10 @@ JOIN movie_actors AS ma ON a.actor_id = ma.actor_id
 WHERE is_lead_role = True;
 
 --3. Show the average duration of movies by director (include director name).
+SELECT concat(d.first_name, ' ', d.last_name) AS director_name,avg(m.duration_minutes) FROM movies AS m
+JOIN directors AS d ON m.director_id = d.director_id
+GROUP BY director_name;
+
 
 --4. Find all movies that are both "Drama" and "Crime" genres.
 
