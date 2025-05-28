@@ -51,6 +51,21 @@ BEGIN
     RAISE NOTICE 'Employee id % has been removed', v_em_id;
 END
 $$;
+--Procedure to remove an employee
+CREATE OR REPLACE PROCEDURE remove_empl(p_em_id INT)
+LANGUAGE plpgsql
+AS
+$$
+DECLARE
+    v_em_id INT;
+BEGIN
+    SELECT employee_id INTO v_em_id FROM employees2
+    WHERE employee_id = p_em_id;
+    DELETE FROM employees2
+    WHERE employee_id = v_em_id;
+    RAISE NOTICE 'Employee id % has been removed', v_em_id;
+END
+$$;
 
 CALL remove_empl (18);
 

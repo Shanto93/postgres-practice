@@ -114,6 +114,42 @@ INSERT INTO movie_actors VALUES
 (9, 7, 'Detective Park', TRUE),
 (10, 8, 'Cooper', TRUE);
 
+
+
+-------------Complex Queries------------
+
+--1. Find directors who have directed movies in at least 2 different genres.
+
+--2. Calculate the total box office gross for each director's films and show the top 3.
+
+--3. Find actors who have worked with the same director more than once.
+
+--4. For each year, show the highest rated movie (IMDB) and its director.
+
+--5. Find all pairs of actors who have appeared in the same movie together (list actor pairs and movie title).
+
+
+--------------------Simple Problem----------------
+--1. List all movies released after 2010.
+SELECT * FROM movies WHERE release_year > 2010;
+
+--2. Find all actors with the first name starting with 'J'.
+SELECT * FROM actors
+WHERE first_name ILIKE 'j%';
+
+--3. Show movies with an IMDB rating above 8.5.
+SELECT * FROM movies
+WHERE imdb_rating > 8.5;
+
+--4. Count how many movies are in each genre.
+SELECT genre_name, count(movie_id) FROM genres
+JOIN movie_genres ON genres.genre_id = movie_genres.genre_id
+GROUP BY genre_name;
+
+--5. List all directors sorted by last name.
+SELECT * FROM directors
+ORDER BY last_name;
+
 -------------------Medium Queries-------------------
 --1. Find all movies directed by Christopher Nolan.
 SELECT * FROM movies
@@ -144,23 +180,6 @@ JOIN actors AS a ON ma.actor_id = a.actor_id;
 
 
 
---------------------Simple Problem----------------
---1. List all movies released after 2010.
-SELECT * FROM movies WHERE release_year > 2010;
-
---2. Find all actors with the first name starting with 'J'.
-SELECT * FROM actors
-WHERE first_name ILIKE 'j%';
-
---3. Show movies with an IMDB rating above 8.5.
-SELECT * FROM movies
-WHERE imdb_rating > 8.5;
-
---4. Count how many movies are in each genre.
-SELECT genre_name, count(movie_id) FROM genres
-JOIN movie_genres ON genres.genre_id = movie_genres.genre_id
-GROUP BY genre_name;
-
---5. List all directors sorted by last name.
-SELECT * FROM directors
-ORDER BY last_name;
+SELECT m.title AS Movie_Title, a.first_name || ' ' || a.last_name AS Actor_Name FROM movies AS m
+JOIN movie_actors AS ma ON m.movie_id = ma.movie_id
+JOIN actors AS a ON ma.actor_id = a.actor_id;
